@@ -1,4 +1,5 @@
 import React from 'react';
+import auth from "./auth";
 
 function Test() {
   return (
