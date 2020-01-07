@@ -242,12 +242,18 @@ state = { trans: [],
               <Card>
                 <Card.Header>Recent Transactions</Card.Header>
                 <ListGroup variant="flush">
-                  {testTransaction.map(transaction => {
+                  {this.state.trans.slice(0, 5).map(transaction => {
+                    var stringVariables = transaction.referenceNumber.split(' ');
+                    stringVariables.shift();
+                    var string = '';
+                    stringVariables.forEach(element => {
+                      string += element + ' ';
+                    });
                     return (
                       <ListGroup.Item className="list-item" variant={transaction.type === 'DEBIT' ? 'danger' : 'success'}>
                         <ListItem alignItems="flex-start">
                           <ListItemText
-                            primary={transaction.reference}
+                            primary={string}
                             secondary={
                               <React.Fragment>
                                 <Typography
