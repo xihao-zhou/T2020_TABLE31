@@ -8,25 +8,67 @@ import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup'
 import './stylesheets/dashboard.css';
 import logo from './images/dbs_logo.svg';
-import { List } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-am4core.useTheme(am4themes_animated);
+const testAccount = {
+  availableBalance: "32784.1",
+  currency: "SGD",
+  displayName: "POSB SAVINGS ACCOUNT",
+  accountNumber: "44284125",
+  accountType: "SAVINGS",
+};
 
-const testTransaction = [{
-  type: "DEBIT",
-  amount: "11.69",
-  date: "2020-01-01 08:40",
-  tag: "F&B",
-  reference: "CRAZY SPICY THAI FOOD",
-}];
+const testTransaction = [
+  {
+    type: "DEBIT",
+    amount: "11.69",
+    date: "2020-01-01 08:40",
+    tag: "F&B",
+    reference: "CRAZY SPICY THAI FOOD",
+  },
+  {
+    type: "CREDIT",
+    amount: "11.69",
+    date: "2020-01-01 08:40",
+    tag: "F&B",
+    reference: "TEST CREDIT 1",
+  },
+  {
+    type: "DEBIT",
+    amount: "11.69",
+    date: "2020-01-01 08:40",
+    tag: "F&B",
+    reference: "TEST DEBIT 2",
+  },
+  {
+    type: "DEBIT",
+    amount: "11.69",
+    date: "2020-01-01 08:40",
+    tag: "F&B",
+    reference: "TEST DEBIT 3",
+  },
+  {
+    type: "CREDIT",
+    amount: "11.69",
+    date: "2020-01-01 08:40",
+    tag: "F&B",
+    reference: "TEST CREDIT 2",
+  },
+];
+
+const recommendations = [
+  {
+    link: 'https://www.dbs.com.sg/personal/deposits/bank-with-ease/dbs-digi-bank-travel-mode?pid=sg-dbs-pweb-bank-heroblock-bank-travemode-btnlearnmore',
+    
+  },
+];
+
+am4core.useTheme(am4themes_animated);
 
 class Dashboard extends React.Component {
 
@@ -121,11 +163,23 @@ class Dashboard extends React.Component {
             <Col>
               <Card>
                 <Card.Header>Account Overview</Card.Header>
-                <ListGroup variant="flush">
-                  <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                  <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                  <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-                </ListGroup>
+                <ListItem alignItems="flex-start">
+                  <ListItemText
+                    primary={testAccount.displayName}
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          color="textPrimary"
+                        >
+                          {`${testAccount.currency} ${testAccount.availableBalance}`}
+                        </Typography>
+                        {` — ${testAccount.accountType} ACCOUNT`}
+                      </React.Fragment>
+                    }
+                  />
+                  </ListItem>
               </Card>
             </Col>
             <Col>
@@ -134,8 +188,7 @@ class Dashboard extends React.Component {
                 <ListGroup variant="flush">
                   {testTransaction.map(transaction => {
                     return (
-                      <ListGroup.Item class="transaction" variant='danger'>
-
+                      <ListGroup.Item className="list-item" variant={transaction.type === 'DEBIT' ? 'danger' : 'success'}>
                         <ListItem alignItems="flex-start">
                           <ListItemText
                             primary={transaction.reference}
@@ -163,6 +216,69 @@ class Dashboard extends React.Component {
               <Card>
                 <Card.Header>Spending Statistics</Card.Header>
                 <div id="chartdiv" style={{ width: "400px", height: "400px" }}></div>
+              </Card>
+            </Col>
+          </Row>
+
+          <Row className="top-row">
+            <Col>
+              <Card>
+                <Card.Header>Accounts & Cards</Card.Header>
+                <ListGroup variant="flush">
+                  {testTransaction.map(transaction => {
+                    return (
+                      <ListGroup.Item className="list-item" action>
+                        <ListItem alignItems="flex-start">
+                          <ListItemText
+                            primary={transaction.reference}
+                            secondary={
+                              <React.Fragment>
+                                <Typography
+                                  component="span"
+                                  variant="body2"
+                                  color="textPrimary"
+                                >
+                                  {`$${transaction.amount}`}
+                                </Typography>
+                                {` — ${transaction.date}`}
+                              </React.Fragment>
+                            }
+                          />
+                        </ListItem>
+                      </ListGroup.Item>
+                    );
+                  })}
+                </ListGroup>
+              </Card>
+            </Col>
+            <Col>
+            <Card>
+              <Card.Header>Investments & Insurance</Card.Header>
+                <ListGroup variant="flush">
+                  {testTransaction.map(item => {
+                    return (
+                      <ListGroup.Item className="list-item" action href={item.link} >
+                        <ListItem alignItems="flex-start">
+                          <ListItemText
+                            primary={transaction.reference}
+                            secondary={
+                              <React.Fragment>
+                                <Typography
+                                  component="span"
+                                  variant="body2"
+                                  color="textPrimary"
+                                >
+                                  {`$${transaction.amount}`}
+                                </Typography>
+                                {` — ${transaction.date}`}
+                              </React.Fragment>
+                            }
+                          />
+                        </ListItem>
+                      </ListGroup.Item>
+                    );
+                  })}
+                </ListGroup>
               </Card>
             </Col>
           </Row>
