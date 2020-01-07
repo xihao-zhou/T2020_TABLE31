@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Card from 'react-bootstrap/Card'
+import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -185,7 +185,7 @@ class Dashboard extends React.Component {
           <Nav className="mr-auto">
             <Nav.Link href="/app"><i class="fas fa-chart-line"></i> Dashboard</Nav.Link>
             <Nav.Link href="/app/user"><i className="fas fa-user"></i> Account Overview</Nav.Link>
-            <Nav.Link href="#"><i className="far fa-list-alt"></i> Transaction History</Nav.Link>
+            <Nav.Link href="/app/history"><i className="far fa-list-alt"></i> Transaction History</Nav.Link>
             <Nav.Link href="#"><i className="far fa-envelope"></i> Messages</Nav.Link>
           </Nav>
         </Navbar>

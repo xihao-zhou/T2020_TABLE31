@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import Test from "./test";
 import UserPage from './user';
+import HistoryPage from './history';
 import Login from "./Login";
 import Dashboard from "./dashboard";
 import * as serviceWorker from "./serviceWorker";
@@ -17,6 +18,7 @@ function App() {
                 {/* <ProtectedRoute exact path="/app" component={Test} /> */}
                 <Route exact path="/app" component={Dashboard}/>
                 <Route exact path="/app/user" component={UserPage}/>
+                <Route exact path="/app/history" component={HistoryPage}/>
                 <Route path="*" component={() => "404 NOT FOUND"} />
             </Switch>
         </div>

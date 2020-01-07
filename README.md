@@ -4,7 +4,7 @@
 
 - Heng Hang 
 - Xihao
-- Ying Hao 
+- Yin Hao 
 
 ## How to Run
 
