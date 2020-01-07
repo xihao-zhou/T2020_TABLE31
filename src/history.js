@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import './stylesheets/history.css';
+import axios from 'axios';
 
 const testTransaction = [
     {
@@ -48,6 +49,19 @@ const testTransaction = [
 ];
 
 class HistoryPage extends React.Component {
+    state = { userDetails: [],
+        trans: [],
+        accounts: []
+    };
+
+    componentDidMount() {
+        axios.get("http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/transactions/79?from=01-01-2018&to=01-30-2020",
+              {
+                headers: { 'Identity': 'T52' , 'Token': '2ba84203-ac56-468c-b8eb-be3c9bed8b84'}
+              }).then(res => this.setState({ trans: res.data.reverse() }))
+              .catch(err => console.log(err));
+    }
+
     render() {
         return (
             <div>
@@ -71,13 +85,23 @@ class HistoryPage extends React.Component {
                             </Row>
                         </Card.Header>
                         <ListGroup>
-                            {testTransaction.map(transaction => {
+                            {this.state.trans.map(transaction => {
+                                var stringVariables = transaction.referenceNumber.split(' ');
+                                stringVariables.shift();
+                                var string = '';
+                                stringVariables.forEach(element => {
+                                  string += element + ' ';
+                                });
+
+                                let timeArray = transaction.date.split('T');
+                                let date = timeArray[0] + ' ' + timeArray[1].split('.')[0];
+
                                 return (
                                     <ListGroup.Item>
                                         <Row>
-                                            <Col xs={6}>{transaction.reference}</Col>
+                                            <Col xs={6}>{string}</Col>
                                             <Col>{`${transaction.type === 'DEBIT' ? '-' : ''}${transaction.amount}`}</Col>
-                                            <Col>{transaction.date}</Col>
+                                            <Col>{date}</Col>
                                         </Row>
                                     </ListGroup.Item>
                                 );
