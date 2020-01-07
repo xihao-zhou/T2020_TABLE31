@@ -13,7 +13,7 @@ function App() {
         <div className="App">
             <Switch>
                 <Route exact path="/" component={Login }/>
-                <ProtectedRoute exact path="/app" component={Test} />
+                {/* <ProtectedRoute exact path="/app" component={Test} /> */}
                 <ProtectedRoute exact path="/app" component={Dashboard}/>
                 <Route path="*" component={() => "404 NOT FOUND"} />
             </Switch>
