@@ -120,13 +120,14 @@ state = { userDetails: [],
     axios.get("http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/accounts/deposit/2",
               {
                 headers: { 'Identity': 'T52' , 'Token': '2ba84203-ac56-468c-b8eb-be3c9bed8b84'}
-              }).then(res => this.setState({ accounts: res.data }))
+              })
+              .then(res => this.setState({ accounts: res.data }))
               .catch(err => console.log(err));
 
     axios.get("http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/transactions/79?from=01-01-2018&to=01-30-2020",
               {
                 headers: { 'Identity': 'T52' , 'Token': '2ba84203-ac56-468c-b8eb-be3c9bed8b84'}
-              }).then(res => this.setState({ trans: res.data }))
+              }).then(res => this.setState({ trans: res.data.reverse() }))
               .catch(err => console.log(err));
 
     let chart = am4core.create("chartdiv", am4charts.PieChart);
@@ -225,7 +226,7 @@ state = { userDetails: [],
                 <Card.Header>Account Overview</Card.Header>
                 <ListItem alignItems="flex-start">
                   <ListItemText
-                    primary= { testAccount.displayName }
+                    primary= { this.state.userDetails.lastName + " " + this.state.userDetails.firstName }
                     secondary={
                       <React.Fragment>
                         <Typography
@@ -253,6 +254,10 @@ state = { userDetails: [],
                     stringVariables.forEach(element => {
                       string += element + ' ';
                     });
+
+                    let timeArray = transaction.date.split('T');
+                    let date = timeArray[0] + ' ' + timeArray[1].split('.')[0];
+
                     return (
                       <ListGroup.Item className="list-item" variant={transaction.type === 'DEBIT' ? 'danger' : 'success'}>
                         <ListItem alignItems="flex-start">
@@ -267,7 +272,7 @@ state = { userDetails: [],
                                 >
                                   {`$${transaction.amount}`}
                                 </Typography>
-                                {` — ${transaction.date}`}
+                                {` — ${date}`}
                               </React.Fragment>
                             }
                           />
