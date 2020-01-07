@@ -177,23 +177,20 @@ state = { userDetails: [],
     chart.legend = new am4charts.Legend();
 
     chart.data = [{
-      "category": "Lithuania",
+      "category": "LEISURE",
       "amount": 501.9
     },{
-      "category": "Germany",
+      "category": "F&B",
       "amount": 165.8
     }, {
-      "category": "Australia",
+      "category": "ATM",
       "amount": 139.9
     }, {
-      "category": "Austria",
+      "category": "TRANSFER",
       "amount": 128.3
     }, {
-      "category": "UK",
+      "category": "TRANSPORT",
       "amount": 99
-    }, {
-      "category": "Belgium",
-      "amount": 60
     }];
   }
 
@@ -217,8 +214,8 @@ state = { userDetails: [],
         </Navbar>
 
         <Jumbotron>
-          <h1>{`Welcome, ${user.firstName} ${user.lastName}!`}</h1>
-          <p>{`You last logged in at ${user.lastLogIn}.`}</p>
+          <h1>{`Welcome, ${ this.state.userDetails.lastName + " " + this.state.userDetails.firstName }!`}</h1>
+          <p>{`You last logged in at ${ this.state.userDetails.lastLogIn }.`}</p>
           <p>{`You have ${user.unreadMessages} unread messages.`}</p>
         </Jumbotron>
 
@@ -239,7 +236,7 @@ state = { userDetails: [],
                         >
                           {`${testAccount.currency} ${testAccount.availableBalance}`}
                         </Typography>
-                        {` — ${ this.state.userDetails.firstName } ACCOUNT`}
+                        {` — ${ testAccount.accountType } ACCOUNT`}
                       </React.Fragment>
                     }
                   />
