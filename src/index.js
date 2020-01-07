@@ -5,19 +5,18 @@ import Test from "./test";
 import Login from "./Login";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { ProtectedRoute } from "./protected.route";
 
 function App() {
     return (
         <div className="App">
-            <Route path="/" component={Login}/>
-            <Route path="/app" component={Test}/>
+            <Switch>
+                <Route exact path="/" component={Login }/>
+                <ProtectedRoute exact path="/app" component={Test} />
+                <Route path="*" component={() => "404 NOT FOUND"} />
+            </Switch>
         </div>
     );
 }
 
 ReactDOM.render( <BrowserRouter> <App /> </BrowserRouter>, document.getElementById("root"));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

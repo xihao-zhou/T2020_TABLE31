@@ -12,6 +12,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import auth from "./auth";
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Login() {
   const classes = useStyles();
-
+  const history = useHistory();
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -52,10 +54,10 @@ export default function Login() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="userid"
+            label="User ID"
+            name="userid"
+            autoComplete="userid"
             autoFocus
           />
           <TextField
@@ -79,8 +81,12 @@ export default function Login() {
             variant="contained"
             color="primary"
             className={classes.submit}
-          >
-            Login
+            onClick={() => {
+                auth.login(() => {
+                  history.push("/app");
+                });
+              }}>
+                Login
           </Button>
           <Grid container>
             <Grid item xs>
