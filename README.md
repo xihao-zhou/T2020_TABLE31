@@ -1,6 +1,6 @@
 # DBS TechTrek 2020 
 
-## Team 32
+## Team 31
 
 - Heng Hang 
 - Xihao

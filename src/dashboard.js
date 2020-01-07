@@ -15,6 +15,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import Jumbotron from 'react-bootstrap/Jumbotron';
+import axios from 'axios';
 
 const testAccount = {
   availableBalance: "32784.1",
@@ -103,7 +104,23 @@ am4core.useTheme(am4themes_animated);
 
 class Dashboard extends React.Component {
 
+state = { trans: [],
+          details: []}
+
   componentDidMount() {
+
+    axios.get("http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/customers/2/details",
+              {
+                headers: { 'Identity': 'T52' , 'Token': '2ba84203-ac56-468c-b8eb-be3c9bed8b84'}
+              }).then(res => this.setState({ details: res.data }))
+              .catch(err => console.log(err));
+
+    axios.get("http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/transactions/79?from=01-01-2018&to=01-30-2020",
+              {
+                headers: { 'Identity': 'T52' , 'Token': '2ba84203-ac56-468c-b8eb-be3c9bed8b84'}
+              }).then(res => this.setState({ trans: res.data }))
+              .catch(err => console.log(err));
+
     let chart = am4core.create("chartdiv", am4charts.PieChart);
 
     // Add and configure Series
@@ -201,6 +218,7 @@ class Dashboard extends React.Component {
             <Col>
               <Card>
                 <Card.Header>Account Overview</Card.Header>
+                { this.state.details.gender }
                 <ListItem alignItems="flex-start">
                   <ListItemText
                     primary={testAccount.displayName}
