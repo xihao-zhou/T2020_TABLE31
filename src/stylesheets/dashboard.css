@@ -2,6 +2,6 @@
     margin-top: 2em;
 }
 
-.list-group-item {
+.list-group-item.list-item {
     padding: 0;
 }
