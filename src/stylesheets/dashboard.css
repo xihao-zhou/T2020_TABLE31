@@ -1,7 +1,13 @@
-.top-row {
+.dashboard-row {
     margin-top: 2em;
 }
 
 .list-group-item.list-item {
     padding: 0;
+}
+
+a.list-group-item.active {
+    color: #495057;
+    background-color: #FFFFFF;
+    border-color: rgba(0, 0, 0, 0.125);
 }
