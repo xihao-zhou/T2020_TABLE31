@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import Jumbotron from 'react-bootstrap/Jumbotron';
 
 const testAccount = {
   availableBalance: "32784.1",
@@ -86,6 +87,17 @@ const investmentsAndInsuranceRecommendations = [
     description: 'Now with Pre-Existing Medical Condition Benefit so you can enjoy holidays 100%',
   }
 ];
+
+const user = {
+  customerId: "1",
+  gender: "Male",
+  firstName: "Ze Yang",
+  lastName: "Lim",
+  lastLogIn: "2019-01-27 00:00",
+  dateOfBirth: "2000-02-01",
+  riskLevel: "Medium",
+  unreadMessages: 2,
+}
 
 am4core.useTheme(am4themes_animated);
 
@@ -171,11 +183,17 @@ class Dashboard extends React.Component {
         <Navbar bg="light" variant="light">
           <Navbar.Brand href="/"><img src={logo} alt="DBS Logo"></img></Navbar.Brand>
           <Nav className="mr-auto">
-            <Nav.Link href="#">Account Overview</Nav.Link>
-            <Nav.Link href="#">Transaction History</Nav.Link>
+            <Nav.Link href="#"><i className="fas fa-user"></i> Account Overview</Nav.Link>
+            <Nav.Link href="#"><i className="far fa-list-alt"></i> Transaction History</Nav.Link>
             <Nav.Link href="#"><i className="far fa-envelope"></i> Messages</Nav.Link>
           </Nav>
         </Navbar>
+
+        <Jumbotron>
+          <h1>{`Welcome, ${user.firstName} ${user.lastName}!`}</h1>
+          <p>{`You last logged in at ${user.lastLogIn}.`}</p>
+          <p>{`You have ${user.unreadMessages} unread messages.`}</p>
+        </Jumbotron>
 
         <Container>
           <Row className="dashboard-row">
