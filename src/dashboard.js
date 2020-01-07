@@ -18,7 +18,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import axios from 'axios';
 
 const testAccount = {
-  availableBalance: "32784.1",
+  availableBalance: "3,2784.1",
   currency: "SGD",
   displayName: "POSB SAVINGS ACCOUNT",
   accountNumber: "44284125",
@@ -104,15 +104,24 @@ am4core.useTheme(am4themes_animated);
 
 class Dashboard extends React.Component {
 
-state = { trans: [],
-          details: []}
+state = { userDetails: [],
+          trans: [],
+          accounts: []
+          }
 
   componentDidMount() {
 
     axios.get("http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/customers/2/details",
               {
                 headers: { 'Identity': 'T52' , 'Token': '2ba84203-ac56-468c-b8eb-be3c9bed8b84'}
-              }).then(res => this.setState({ details: res.data }))
+              }).then(res => this.setState({ userDetails: res.data }))
+              .catch(err => console.log(err));
+
+    axios.get("http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/accounts/deposit/2",
+              {
+                headers: { 'Identity': 'T52' , 'Token': '2ba84203-ac56-468c-b8eb-be3c9bed8b84'}
+              })
+              .then(res => this.setState({ accounts: res.data }))
               .catch(err => console.log(err));
 
     axios.get("http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/transactions/79?from=01-01-2018&to=01-30-2020",
@@ -125,8 +134,8 @@ state = { trans: [],
 
     // Add and configure Series
     let pieSeries = chart.series.push(new am4charts.PieSeries());
-    pieSeries.dataFields.value = "litres";
-    pieSeries.dataFields.category = "country";
+    pieSeries.dataFields.value = "amount";
+    pieSeries.dataFields.category = "category";
 
     // Let's cut a hole in our Pie chart the size of 30% the radius
     chart.innerRadius = am4core.percent(30);
@@ -168,23 +177,23 @@ state = { trans: [],
     chart.legend = new am4charts.Legend();
 
     chart.data = [{
-      "country": "Lithuania",
-      "litres": 501.9
+      "category": "Lithuania",
+      "amount": 501.9
     },{
-      "country": "Germany",
-      "litres": 165.8
+      "category": "Germany",
+      "amount": 165.8
     }, {
-      "country": "Australia",
-      "litres": 139.9
+      "category": "Australia",
+      "amount": 139.9
     }, {
-      "country": "Austria",
-      "litres": 128.3
+      "category": "Austria",
+      "amount": 128.3
     }, {
-      "country": "UK",
-      "litres": 99
+      "category": "UK",
+      "amount": 99
     }, {
-      "country": "Belgium",
-      "litres": 60
+      "category": "Belgium",
+      "amount": 60
     }];
   }
 
@@ -218,10 +227,9 @@ state = { trans: [],
             <Col>
               <Card>
                 <Card.Header>Account Overview</Card.Header>
-                { this.state.details.gender }
                 <ListItem alignItems="flex-start">
                   <ListItemText
-                    primary={testAccount.displayName}
+                    primary= { this.state.userDetails.lastName + " " + this.state.userDetails.firstName }
                     secondary={
                       <React.Fragment>
                         <Typography
@@ -231,7 +239,7 @@ state = { trans: [],
                         >
                           {`${testAccount.currency} ${testAccount.availableBalance}`}
                         </Typography>
-                        {` — ${testAccount.accountType} ACCOUNT`}
+                        {` — ${ this.state.userDetails.firstName } ACCOUNT`}
                       </React.Fragment>
                     }
                   />
