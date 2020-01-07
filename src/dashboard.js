@@ -120,8 +120,7 @@ state = { userDetails: [],
     axios.get("http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/accounts/deposit/2",
               {
                 headers: { 'Identity': 'T52' , 'Token': '2ba84203-ac56-468c-b8eb-be3c9bed8b84'}
-              })
-              .then(res => this.setState({ accounts: res.data }))
+              }).then(res => this.setState({ accounts: res.data }))
               .catch(err => console.log(err));
 
     axios.get("http://techtrek-api-gateway.ap-southeast-1.elasticbeanstalk.com/transactions/79?from=01-01-2018&to=01-30-2020",
@@ -177,23 +176,20 @@ state = { userDetails: [],
     chart.legend = new am4charts.Legend();
 
     chart.data = [{
-      "category": "Lithuania",
+      "category": "LEISURE",
       "amount": 501.9
     },{
-      "category": "Germany",
+      "category": "F&B",
       "amount": 165.8
     }, {
-      "category": "Australia",
+      "category": "ATM",
       "amount": 139.9
     }, {
-      "category": "Austria",
+      "category": "TRANSFER",
       "amount": 128.3
     }, {
-      "category": "UK",
+      "category": "TRANSPORT",
       "amount": 99
-    }, {
-      "category": "Belgium",
-      "amount": 60
     }];
   }
 
@@ -217,8 +213,8 @@ state = { userDetails: [],
         </Navbar>
 
         <Jumbotron>
-          <h1>{`Welcome, ${user.firstName} ${user.lastName}!`}</h1>
-          <p>{`You last logged in at ${user.lastLogIn}.`}</p>
+          <h1>{`Welcome, ${ this.state.userDetails.lastName + " " + this.state.userDetails.firstName }!`}</h1>
+          <p>{`You last logged in at ${ this.state.userDetails.lastLogIn }.`}</p>
           <p>{`You have ${user.unreadMessages} unread messages.`}</p>
         </Jumbotron>
 
@@ -229,7 +225,7 @@ state = { userDetails: [],
                 <Card.Header>Account Overview</Card.Header>
                 <ListItem alignItems="flex-start">
                   <ListItemText
-                    primary= { this.state.userDetails.lastName + " " + this.state.userDetails.firstName }
+                    primary= { testAccount.displayName }
                     secondary={
                       <React.Fragment>
                         <Typography
@@ -239,7 +235,7 @@ state = { userDetails: [],
                         >
                           {`${testAccount.currency} ${testAccount.availableBalance}`}
                         </Typography>
-                        {` — ${ this.state.userDetails.firstName } ACCOUNT`}
+                        {` — ${ testAccount.accountType } ACCOUNT`}
                       </React.Fragment>
                     }
                   />
