@@ -181,9 +181,10 @@ class Dashboard extends React.Component {
     return (
       <div>
         <Navbar bg="light" variant="light">
-          <Navbar.Brand href="/"><img src={logo} alt="DBS Logo"></img></Navbar.Brand>
+          <Navbar.Brand href="https://www.dbs.com.sg/personal/default.page" target="_blank"><img src={logo} alt="DBS Logo"></img></Navbar.Brand>
           <Nav className="mr-auto">
-            <Nav.Link href="#"><i className="fas fa-user"></i> Account Overview</Nav.Link>
+            <Nav.Link href="/app"><i class="fas fa-chart-line"></i> Dashboard</Nav.Link>
+            <Nav.Link href="/app/user"><i className="fas fa-user"></i> Account Overview</Nav.Link>
             <Nav.Link href="#"><i className="far fa-list-alt"></i> Transaction History</Nav.Link>
             <Nav.Link href="#"><i className="far fa-envelope"></i> Messages</Nav.Link>
           </Nav>
