@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Card from 'react-bootstrap/Card'
+import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import axios from 'axios';
 
 const testAccount = {
@@ -62,12 +63,42 @@ const testTransaction = [
   },
 ];
 
-const recommendations = [
+const accountAndCardRecommendations = [
   {
     link: 'https://www.dbs.com.sg/personal/deposits/bank-with-ease/dbs-digi-bank-travel-mode?pid=sg-dbs-pweb-bank-heroblock-bank-travemode-btnlearnmore',
-    
+    name: 'Travel Mode',
+    description: 'Switch it on and forget about travel anxiety',
   },
+  {
+    link: 'https://www.dbs.com.sg/personal/travel-marketplace/this-is-the-way-we-travel?pid=sg-dbs-pweb-bank-heroblock-bank-this-is-the-way-we-travel-btnlearnmore',
+    name: 'Multi-currency DBS Visa Debit Card',
+    description: 'The only travel wallet with up to 3.25% cashback worldwide in 150 currencies',
+  }
 ];
+
+const investmentsAndInsuranceRecommendations = [
+  {
+    link: 'https://www.dbs.com.sg/personal/investments/other-investments/invest-saver',
+    name: 'DBS Invest-Saver',
+    description: 'Invest in Exchange Traded Funds or Unit Trusts from S$100 a month, on a repeat mode',
+  },
+  {
+    link: 'https://www.dbs.com.sg/personal/insurance/travel/travellershield-plus',
+    name: 'TravellerShield Plus',
+    description: 'Now with Pre-Existing Medical Condition Benefit so you can enjoy holidays 100%',
+  }
+];
+
+const user = {
+  customerId: "1",
+  gender: "Male",
+  firstName: "Ze Yang",
+  lastName: "Lim",
+  lastLogIn: "2019-01-27 00:00",
+  dateOfBirth: "2000-02-01",
+  riskLevel: "Medium",
+  unreadMessages: 2,
+}
 
 am4core.useTheme(am4themes_animated);
 
@@ -167,16 +198,23 @@ state = { trans: [],
     return (
       <div>
         <Navbar bg="light" variant="light">
-          <Navbar.Brand href="/"><img src={logo} alt="DBS Logo"></img></Navbar.Brand>
+          <Navbar.Brand href="https://www.dbs.com.sg/personal/default.page" target="_blank"><img src={logo} alt="DBS Logo"></img></Navbar.Brand>
           <Nav className="mr-auto">
-            <Nav.Link href="#">Account Overview</Nav.Link>
-            <Nav.Link href="#">Transaction History</Nav.Link>
+            <Nav.Link href="/app"><i class="fas fa-chart-line"></i> Dashboard</Nav.Link>
+            <Nav.Link href="/app/user"><i className="fas fa-user"></i> Account Overview</Nav.Link>
+            <Nav.Link href="/app/history"><i className="far fa-list-alt"></i> Transaction History</Nav.Link>
             <Nav.Link href="#"><i className="far fa-envelope"></i> Messages</Nav.Link>
           </Nav>
         </Navbar>
 
+        <Jumbotron>
+          <h1>{`Welcome, ${user.firstName} ${user.lastName}!`}</h1>
+          <p>{`You last logged in at ${user.lastLogIn}.`}</p>
+          <p>{`You have ${user.unreadMessages} unread messages.`}</p>
+        </Jumbotron>
+
         <Container>
-          <Row className="top-row">
+          <Row className="dashboard-row">
             <Col>
               <Card>
                 <Card.Header>Account Overview</Card.Header>
@@ -232,23 +270,23 @@ state = { trans: [],
             </Col>
             <Col>
               <Card>
-                <Card.Header>Spending Statistics</Card.Header>
+                <Card.Header>Spending Statistics (Past Month)</Card.Header>
                 <div id="chartdiv" style={{ width: "400px", height: "400px" }}></div>
               </Card>
             </Col>
           </Row>
 
-          <Row className="top-row">
+          <Row className="dashboard-row">
             <Col>
               <Card>
                 <Card.Header>Accounts & Cards</Card.Header>
                 <ListGroup variant="flush">
-                  {testTransaction.map(transaction => {
+                  {accountAndCardRecommendations.map(recommendation => {
                     return (
-                      <ListGroup.Item className="list-item" action>
+                      <ListGroup.Item className="list-item" action href={recommendation.link} target="_blank">
                         <ListItem alignItems="flex-start">
                           <ListItemText
-                            primary={transaction.reference}
+                            primary={recommendation.name}
                             secondary={
                               <React.Fragment>
                                 <Typography
@@ -256,9 +294,8 @@ state = { trans: [],
                                   variant="body2"
                                   color="textPrimary"
                                 >
-                                  {`$${transaction.amount}`}
+                                  {recommendation.description}
                                 </Typography>
-                                {` — ${transaction.date}`}
                               </React.Fragment>
                             }
                           />
@@ -273,12 +310,12 @@ state = { trans: [],
             <Card>
               <Card.Header>Investments & Insurance</Card.Header>
                 <ListGroup variant="flush">
-                  {testTransaction.map(transaction => {
+                  {investmentsAndInsuranceRecommendations.map(recommendation => {
                     return (
-                      <ListGroup.Item className="list-item">
+                      <ListGroup.Item className="list-item" action href={recommendation.link} target="_blank">
                         <ListItem alignItems="flex-start">
                           <ListItemText
-                            primary={transaction.reference}
+                            primary={recommendation.name}
                             secondary={
                               <React.Fragment>
                                 <Typography
@@ -286,9 +323,8 @@ state = { trans: [],
                                   variant="body2"
                                   color="textPrimary"
                                 >
-                                  {`$${transaction.amount}`}
+                                  {recommendation.description}
                                 </Typography>
-                                {` — ${transaction.date}`}
                               </React.Fragment>
                             }
                           />
